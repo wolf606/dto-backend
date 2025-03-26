@@ -68,7 +68,8 @@
             "in": "header",
             "required": true,
             "type": "string",
-            "description": "Bearer token for authentication"
+            "description": "Bearer token for authentication",
+            "example": "Bearer your-token-here"
           },
           {
             "name": "body",
@@ -131,7 +132,8 @@
             "in": "header",
             "required": true,
             "type": "string",
-            "description": "Bearer token for authentication"
+            "description": "Bearer token for authentication",
+            "example": "Bearer your-token-here"
           },
           {
             "name": "body",
@@ -168,7 +170,8 @@
             "in": "header",
             "required": true,
             "type": "string",
-            "description": "Bearer token for authentication"
+            "description": "Bearer token for authentication",
+            "example": "Bearer your-token-here"
           }
         ],
         "responses": {
@@ -187,7 +190,8 @@
             "in": "header",
             "required": true,
             "type": "string",
-            "description": "Bearer token for authentication"
+            "description": "Bearer token for authentication",
+            "example": "Bearer your-token-here"
           },
           {
             "name": "body",
@@ -215,7 +219,8 @@
             "in": "header",
             "required": true,
             "type": "string",
-            "description": "Bearer token for authentication"
+            "description": "Bearer token for authentication",
+            "example": "Bearer your-token-here"
           }
         ],
         "responses": {
@@ -240,7 +245,8 @@
             "in": "header",
             "required": true,
             "type": "string",
-            "description": "Bearer token for authentication"
+            "description": "Bearer token for authentication",
+            "example": "Bearer your-token-here"
           }
         ],
         "responses": {

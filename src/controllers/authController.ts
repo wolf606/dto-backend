@@ -23,7 +23,7 @@ export const register = async (req: Request, res: Response, next: NextFunction):
       data: { email, password: hashedPassword, role },
     });
 
-    res.status(201).json({ message: "Usuario registrado", user });
+    res.status(201).json({ message: "Usuario registrado" });
   } catch (error) {
     next(error);
   }
