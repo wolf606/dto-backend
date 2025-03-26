@@ -30,8 +30,6 @@ services:
 volumes:
   menus-db-vol:
     external: true
-  admin-vol:
-    external: true
 
 networks:
   app-network:
