@@ -10,11 +10,14 @@ COPY package*.json ./
 # Install dependencies (including dev dependencies)
 RUN npm install
 
-# Copy the rest of the app files
+# Copy the rest of the app files (including the prisma folder)
 COPY . .
 
+# Run Prisma generate to make sure the Prisma client is built
+RUN npx prisma generate
+
 # Build TypeScript files (if applicable)
-RUN npm run tsc
+RUN npm run build
 
 # Final stage (runner)
 FROM node:22-bullseye-slim as runner
