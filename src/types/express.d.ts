@@ -11,5 +11,6 @@ declare global {
   }
   interface ErrorResponse extends Error {
         statusCode?: number;
+        details?: Object;
     }
 }

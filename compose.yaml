@@ -8,22 +8,31 @@ services:
       POSTGRES_USER: bowie
       POSTGRES_PASSWORD: vienna
       POSTGRES_DB: backend_db
+    networks:
+      - app-network
     volumes:
       - menus-db-vol:/var/lib/postgresql/data 
   
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
-    ports:
-      - 5050:80
+  app:
+    build: .
+    container_name: node-app
     environment:
-      PGADMIN_DEFAULT_EMAIL: luismsanchez808@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: vienna
-    volumes:
-      - admin-vol:/var/lib/pgadmin
+      - DATABASE_URL=postgresql://bowie:vienna@db:5432/backend_db?schema=public
+      - JWT_SECRET=68xpTyyOCn+j9DfMBra13sD69iOjRiYzvt4UCosbgZY=
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - app-network
+    restart: always
 
 volumes:
   menus-db-vol:
     external: true
   admin-vol:
     external: true
+
+networks:
+  app-network:
+    driver: bridge

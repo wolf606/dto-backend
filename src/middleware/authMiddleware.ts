@@ -8,29 +8,31 @@ export const authMiddleware = (roles: string[] = []) => {
     const token = req.header("Authorization")?.split(" ")[1] || "";
 
     if (!token) {
-        res.status(401).json({ message: "Acceso denegado" });
+        const error: ErrorResponse = new Error("Acceso denegado");
+        error.statusCode = 401;
+        throw error;
     }
 
     try {
       const decoded: any = jwt.verify(token, JWT_SECRET);
 
       if (!decoded) {
-        res.status(401).json({ message: "Token inválido" });
-        return;    
+        const error: ErrorResponse = new Error("Token inválido");
+        error.statusCode = 401;
+        throw error; 
     }
     
     req.user = { id: decoded.id, role: decoded.role };
 
       if (roles.length && !roles.includes(decoded.role)) {
-        console.log(decoded.role);
-        console.log(roles);
-        res.status(403).json({ message: "No tienes permisos" });
-        return;
+        const error: ErrorResponse = new Error("No tienes permisos");
+        error.statusCode = 403;
+        throw error;
       }
 
       next();
     } catch (error) {
-      res.status(401).json({ message: "Token inválido" });
+        next(error);
     }
   };
 };
