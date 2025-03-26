@@ -1,0 +1,254 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": "This is a REST API for managing authentication, products, and orders."
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "description": "Allows a new user to register by providing email, password, and role.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": { "type": "string", "example": "user@example.com" },
+                "password": { "type": "string", "example": "password123" },
+                "role": { "type": "string", "example": "CLIENT" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "User successfully registered" },
+          "400": { "description": "Invalid input or user already exists" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login a user",
+        "description": "Allows a user to log in by providing email and password.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": { "type": "string", "example": "user@example.com" },
+                "password": { "type": "string", "example": "password123" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Login successful, returns a token" },
+          "400": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/products/": {
+      "post": {
+        "summary": "Create a new product",
+        "description": "Allows an admin to create a new product by providing name, description, and price.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authentication"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string", "example": "Product Name" },
+                "description": { "type": "string", "example": "Product Description" },
+                "price": { "type": "number", "example": 99.99 }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Product successfully created" },
+          "403": { "description": "Unauthorized access" }
+        }
+      },
+      "get": {
+        "summary": "Get all products",
+        "description": "Retrieves a list of all available products.",
+        "responses": {
+          "200": { "description": "List of products" }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "summary": "Get product by ID",
+        "description": "Retrieves details of a specific product by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the product"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Product details" },
+          "404": { "description": "Product not found" }
+        }
+      },
+      "put": {
+        "summary": "Update a product",
+        "description": "Allows an admin to update a product's details by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the product"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authentication"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string", "example": "Updated Name" },
+                "description": { "type": "string", "example": "Updated Description" },
+                "price": { "type": "number", "example": 79.99 }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Product successfully updated" },
+          "403": { "description": "Unauthorized access" }
+        }
+      },
+      "delete": {
+        "summary": "Delete a product",
+        "description": "Allows an admin to delete a product by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the product"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authentication"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Product successfully deleted" },
+          "403": { "description": "Unauthorized access" }
+        }
+      }
+    },
+    "/orders/": {
+      "post": {
+        "summary": "Create a new order",
+        "description": "Allows a client to create a new order by providing the product ID.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authentication"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productId": { "type": "string", "example": "product-id-123" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Order successfully created" },
+          "404": { "description": "Product not found" }
+        }
+      },
+      "get": {
+        "summary": "Get all orders",
+        "description": "Retrieves a list of all orders for the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authentication"
+          }
+        ],
+        "responses": {
+          "200": { "description": "List of orders" }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "summary": "Get order by ID",
+        "description": "Retrieves details of a specific order by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the order"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authentication"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Order details" },
+          "404": { "description": "Order not found" },
+          "403": { "description": "Unauthorized access" }
+        }
+      }
+    }
+  }
+}
